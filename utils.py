@@ -1,3 +1,19 @@
+"""
+This file is based on the DeepSC implementation from:
+
+H. Xie, Z. Qin, G. Y. Li, and B. H. Juang,
+"Deep Learning Enabled Semantic Communication Systems,"
+IEEE Transactions on Signal Processing, 2021.
+
+Original code:
+https://github.com/13274086/DeepSC
+
+--------------------------------------------------
+Modifications and extensions (This work, 2025):
+- Latent space disentanglement (z_sem, z_rob, z_snr)
+- SNR-aware gating mechanism
+--------------------------------------------------
+
 # -*- coding: utf-8 -*-
 """
 Created on Mon Jun  1 09:47:54 2020
@@ -275,7 +291,8 @@ def train_step(model, src, trg, n_var, pad, opt, criterion, channel, mi_net=None
     opt.step()
 
     return loss.item()
-
+    
+# ADDED (This work):
 def train_step_zsplit_semantic(model, src, trg, n_var,
                                pad, opt, criterion, channel,
                                mi_net=None):
@@ -347,6 +364,7 @@ def train_step_zsplit_semantic(model, src, trg, n_var,
 
     return loss.item()
 
+# ADDED (This work):
 def train_step_zsplit_robust(model, src, trg, n_var,
                              pad, opt, criterion, channel,
                              mi_net=None):
@@ -414,6 +432,7 @@ def train_step_zsplit_robust(model, src, trg, n_var,
 
     return loss.item()
 
+# ADDED (This work):
 def train_step_zsplit_gating(model, src, trg, n_var,
                              pad, opt, criterion, channel,
                              mi_net=None):
@@ -548,6 +567,7 @@ def val_step(model, src, trg, n_var, pad, criterion, channel):
     
     return loss.item()
 
+# ADDED (This work):
 def val_step_zsplit_semantic(model, src, trg, n_var,
                              pad, criterion, channel):
     """
@@ -594,6 +614,7 @@ def val_step_zsplit_semantic(model, src, trg, n_var,
 
     return loss.item()
 
+# ADDED (This work):
 def val_step_zsplit_robust(model, src, trg, n_var,
                            pad, criterion, channel):
     """
@@ -642,6 +663,7 @@ def val_step_zsplit_robust(model, src, trg, n_var,
 
     return loss.item()
 
+# ADDED (This work):
 def val_step_zsplit_gating(model, src, trg, n_var,
                            pad, criterion, channel):
     """
@@ -746,6 +768,7 @@ def greedy_decode(model, src, n_var, max_len, padding_idx, start_symbol, channel
         outputs = torch.cat([outputs, next_word], dim=1)
 
     return outputs
+
 
 
 
