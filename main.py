@@ -1,3 +1,19 @@
+"""
+This file is based on the DeepSC implementation from:
+
+H. Xie, Z. Qin, G. Y. Li, and B. H. Juang,
+"Deep Learning Enabled Semantic Communication Systems,"
+IEEE Transactions on Signal Processing, 2021.
+
+Original code:
+https://github.com/13274086/DeepSC
+
+--------------------------------------------------
+Modifications and extensions (This work, 2025):
+- Latent space disentanglement (z_sem, z_rob, z_snr)
+- SNR-aware gating mechanism
+--------------------------------------------------
+
 # -*- coding: utf-8 -*-
 """
 Created on Tue May 26 16:59:14 2020
@@ -68,6 +84,7 @@ def train(epoch, args, net):
     )
     pbar = tqdm(train_iterator)
 
+    #ADDED (This work):
     # 한 epoch 동안 고정된 SNR (원래 코드와 동일한 동작)
     noise_std = np.random.uniform(SNR_to_noise(5), SNR_to_noise(10), size=(1))
 
@@ -118,7 +135,7 @@ def validate(epoch, args, net):
     net.eval()
     pbar = tqdm(test_iterator)
     total = 0.0
-
+    # ADDED (This work):
     # 🔥 FIX 1: noise_std 정의
     noise_std = np.random.uniform(SNR_to_noise(5), SNR_to_noise(10), size=(1))
 
@@ -172,6 +189,7 @@ if __name__ == '__main__':
     end_idx = token_to_idx["<END>"]
 
     """ define model, optimizer and loss function """
+    # ADDED (This work):
     if args.arch == 'baseline':
         deepsc = DeepSC(
             args.num_layers, num_vocab, num_vocab,
@@ -199,6 +217,7 @@ if __name__ == '__main__':
     # 체크포인트 폴더 미리 생성
     if not os.path.exists(args.checkpoint_path):
         os.makedirs(args.checkpoint_path)
+    # ADDED (This work):
     # 🔥 FIX 3: record_acc는 epoch 루프 바깥에서 한 번만 초기화
     best_loss = float('inf')
 
@@ -231,5 +250,6 @@ if __name__ == '__main__':
     
 
         
+
 
 
