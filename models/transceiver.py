@@ -1,3 +1,20 @@
+"""
+This file is based on the DeepSC implementation from:
+
+H. Xie, Z. Qin, G. Y. Li, and B. H. Juang,
+"Deep Learning Enabled Semantic Communication Systems,"
+IEEE Transactions on Signal Processing, 2021.
+
+Original code:
+https://github.com/13274086/DeepSC
+
+--------------------------------------------------
+Modifications and extensions (This work, 2025):
+- Latent space disentanglement (z_sem, z_rob, z_snr)
+- SNR-aware gating mechanism
+--------------------------------------------------
+
+
 # -*- coding: utf-8 -*-
 """
 Created on Mon May 25 20:33:53 2020
@@ -285,6 +302,7 @@ import torch
 import torch.nn as nn
 
 class DeepSCZSplit(DeepSC):
+# ADDED (This work):
     """
     DeepSC + 3-way latent split (z_sem, z_rob, z_snr)
     Option 1: z_sem을 decoder 쪽에 직접 연결해서 semantic 정보 강화
@@ -323,6 +341,7 @@ class DeepSCZSplit(DeepSC):
 
 
     def split_latent(self, enc_output, n_var):
+    #ADDED (This work):
         """
         enc_output: [B, T, d_model]
         n_var: scalar (noise variance 또는 SNR 기반 값)
@@ -376,5 +395,6 @@ class DeepSCZSplit(DeepSC):
 
 
     
+
 
 
