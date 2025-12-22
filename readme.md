@@ -42,15 +42,17 @@ python preprocess_text.py
 
 ## Train
 ```shell
-python main.py 
+python train.py 
 ```
 ### Notes
 + Please carefully set the $\lambda$ of mutual information part since I have tested the model in different platform, 
-i.e., Tensorflow and Pytorch, same $\lambda$ shows different performance.  
+i.e., Tensorflow and Pytorch, same $\lambda$ shows different performance.
++ I changed this part from main.py -> train.py(my own code) 
 
 ## Evaluation
 ```shell
-python performance.py
+python eval.py
 ```
 ### Notes
 + If you want to compute the sentence similarity, please download the bert model.
++ I changed this part from test.py -> eval.py(my own cod
